@@ -159,7 +159,7 @@ int main(int argc, char **argv) {
 			elapsed = std::min(0.1f, elapsed);
 
 			time += elapsed;
-			if (time >= 20.0f) {
+			if (time >= 40.0f) {
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 					glReadBuffer(GL_FRONT);
 					int player1Score = 0;

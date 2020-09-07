@@ -9,10 +9,13 @@
 #include <deque>
 
 struct Ball {
-	glm::vec2 ball_radius = glm::vec2(0.2f, 0.2f);
-	glm::vec2 ball = glm::vec2(0.0f, 0.0f);
-	glm::vec2 ball_velocity = glm::vec2(-1.0f, 0.0f);
-}
+	glm::vec2 ball_radius;
+	glm::vec2 ball;
+	glm::vec2 ball_velocity;
+	glm::u8vec4 trail_color;
+	float alive;
+	std::deque< glm::vec3 > ball_trail;
+};
 
 /*
  * PongMode is a game mode that implements a single-player game of Pong.
@@ -26,6 +29,7 @@ struct PongMode : Mode {
 	virtual bool handle_event(SDL_Event const &, glm::uvec2 const &window_size) override;
 	virtual void update(float elapsed) override;
 	virtual void draw(glm::uvec2 const &drawable_size) override;
+	virtual void newBall();
 
 	//----- game state -----
 
@@ -36,8 +40,10 @@ struct PongMode : Mode {
 	glm::vec2 left_paddle = glm::vec2(-court_radius.x + 0.5f, 0.0f);
 	glm::vec2 right_paddle = glm::vec2( court_radius.x - 0.5f, 0.0f);
 
-	glm::vec2 ball = glm::vec2(0.0f, 0.0f);
-	glm::vec2 ball_velocity = glm::vec2(-1.0f, 0.0f);
+	float time = 0.0;
+	float threshold = 6.0f;
+
+	std::vector<Ball*> balls;
 
 	uint32_t left_score = 0;
 	uint32_t right_score = 0;
@@ -48,11 +54,9 @@ struct PongMode : Mode {
 	//----- pretty rainbow trails -----
 
 	float trail_length = 0.04f;
-
-	glm::u8vec4 trail_color = (glm::u8vec4((0x171714ff >> 24) & 0xff, (0x171714ff >> 16) & 0xff, (0x171714ff >> 8) & 0xff, (0x171714ff) & 0xff ));
 	const glm::u8vec4 player1_trail = (glm::u8vec4((0x00ACF4ff >> 24) & 0xff, (0x00ACF4ff >> 16) & 0xff, (0x00ACF4ff >> 8) & 0xff, (0x00ACF4ff) & 0xff ));
 	const glm::u8vec4 player2_trail = (glm::u8vec4((0xF50064ff >> 24) & 0xff, (0xF50064ff >> 16) & 0xff, (0xF50064ff >> 8) & 0xff, (0xF50064ff) & 0xff ));
-	std::deque< glm::vec3 > ball_trail; //stores (x,y,age), oldest elements first
+	//std::deque< glm::vec3 > ball_trail; //stores (x,y,age), oldest elements first
 
 	//----- opengl assets / helpers ------
 
