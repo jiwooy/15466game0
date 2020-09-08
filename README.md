@@ -1,15 +1,20 @@
-# (TODO: your game's title)
+Turf Wars: 2D Edition
 
-Author: (TODO: your name)
+Author: Jiwoo
 
-Design: (TODO: In two sentences or fewer, describe what is new and interesting about your game.)
+Design: In this game, you are a paddle facing off against another paddle in a
+battle to see who can ink the most turf! The ball(s) you hit back and forth will mark your territory!
 
 Screen Shot:
 
-![Screen Shot](screenshot.png)
+![Screen Shot](turfwar.png)
 
 How To Play:
 
-(TODO: describe the controls and (if needed) goals/strategy.)
+Use the mouse to move your paddle around.
+The game will decide the winner when time runs out.
+Ball(s) you hit back will convert their trailing ink to your color, and likewise
+for the opponent.
+If you are unable to hit the opponent's ball back, it will not change its trail color.
 
 This game was built with [NEST](NEST.md).

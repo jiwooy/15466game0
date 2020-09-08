@@ -43,6 +43,9 @@ struct PongMode : Mode {
 	float time = 0.0;
 	float threshold = 6.0f;
 
+	int startingW = 640;
+	int startingH = 480;
+
 	std::vector<Ball*> balls;
 
 	uint32_t left_score = 0;

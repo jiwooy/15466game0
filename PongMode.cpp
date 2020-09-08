@@ -16,7 +16,7 @@ PongMode::PongMode() {
 	b->ball_velocity = glm::vec2(-1.0f, 0.0f);
 	b->ball_radius = glm::vec2(0.2f, 0.2f);
 	b->alive = 0.0;
-	b->trail_color = (glm::u8vec4((0x171714ff >> 24) & 0xff, (0x171714ff >> 16) & 0xff, (0x171714ff >> 8) & 0xff, (0x171714ff) & 0xff ));
+	b->trail_color = (glm::u8vec4((0x000000ff >> 24) & 0xff, (0x000000ff >> 16) & 0xff, (0x000000ff >> 8) & 0xff, (0x000000ff) & 0xff ));
 	balls.push_back(b);
 
 	//set up trail as if ball has been here for 'forever':
@@ -196,9 +196,9 @@ void PongMode::update(float elapsed) {
 			}
 		}
 		if (right_paddle.y < balls[closest]->ball.y + ai_offset) {
-				right_paddle.y = std::min(balls[closest]->ball.y + ai_offset, right_paddle.y + 7.0f * elapsed);
+				right_paddle.y = std::min(balls[closest]->ball.y + ai_offset, right_paddle.y + 10.0f * elapsed);
 			} else {
-				right_paddle.y = std::max(balls[closest]->ball.y + ai_offset, right_paddle.y - 7.0f * elapsed);
+				right_paddle.y = std::max(balls[closest]->ball.y + ai_offset, right_paddle.y - 10.0f * elapsed);
 		}
 	}
 
@@ -473,10 +473,15 @@ void PongMode::draw(glm::uvec2 const &drawable_size) {
 	GL.Disable (EnableCap.ScissorTest);
 	*/
 
+	float rightx = 597 / 640;
+	float paddleScale = 20 / 640;
+	float leftx = 30 / 640;
+	float ySize = 200 / 480;
+	//cout << drawable_size.x << " " << drawable_size.y;
 	//right paddle area clear
 	glEnable(GL_SCISSOR_TEST);
 	glScissor((GLint)597, (GLint)-court_radius.y,
-			(GLsizei)20, (GLsizei)court_radius.y * 200);
+			(GLsizei)20, (GLsizei)(court_radius.y * 200));
 	//clear the color buffer:
 	glClearColor(bg_color.r / 255.0f, bg_color.g / 255.0f, bg_color.b / 255.0f, bg_color.a / 255.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -485,7 +490,7 @@ void PongMode::draw(glm::uvec2 const &drawable_size) {
 	//left paddle area clear
 	glEnable(GL_SCISSOR_TEST);
 	glScissor((GLint)-court_radius.x + 30, (GLint)-court_radius.y,
-			(GLsizei)20, (GLsizei)court_radius.y * 200);
+			(GLsizei)(20), (GLsizei)court_radius.y * 200);
 	//clear the color buffer:
 	glClearColor(bg_color.r / 255.0f, bg_color.g / 255.0f, bg_color.b / 255.0f, bg_color.a / 255.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
